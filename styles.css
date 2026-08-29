@@ -53,15 +53,16 @@ ul,ol{list-style:none}
 .hdr-in{
   max-width:1220px;margin-inline:auto;height:100%;
   padding-inline:clamp(20px,4vw,48px);
-  display:flex;align-items:center;gap:26px;
+  display:flex;align-items:center;gap:20px;
 }
 .brand{display:flex;align-items:center;gap:12px;position:relative;z-index:96}
-.brand img{width:56px;height:auto;background:var(--paper);padding:5px 6px;border-radius:9px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.brand-mk{width:46px;height:auto;flex:none;transition:transform .3s ease}
+.brand:hover .brand-mk{transform:translateY(-2px)}
 .brand-t{display:flex;flex-direction:column;line-height:1.05}
 .brand-t i{font:600 10px/1 var(--disp);letter-spacing:.42em;color:var(--gold2);font-style:normal}
 .brand-t b{font:800 21px/1.1 var(--disp);letter-spacing:.24em;color:#fff}
 
-.nav{display:flex;align-items:center;gap:26px;margin-left:auto}
+.nav{display:flex;align-items:center;gap:22px;margin-left:auto}
 .nav a{
   color:rgba(255,255,255,.82);font:500 14px/1 var(--body);letter-spacing:.02em;
   padding:8px 2px;position:relative;transition:color .25s;
@@ -74,6 +75,7 @@ ul,ol{list-style:none}
 .nav a:hover::after{right:2px}
 .nav .nav-cta{
   border:1px solid rgba(224,188,99,.55);border-radius:9px;padding:9px 16px;color:var(--gold2);
+  white-space:nowrap;
 }
 .nav .nav-cta::after{display:none}
 .nav .nav-cta:hover{background:rgba(198,155,58,.14);color:var(--gold2)}
@@ -95,10 +97,19 @@ ul,ol{list-style:none}
 .wa-btn{
   display:flex;align-items:center;gap:8px;
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
-  color:#fff;border-radius:9px;padding:8px 14px;font:600 13px/1 var(--body);
+  color:#fff;border-radius:9px;padding:10px;font:600 13px/1 var(--body);
   transition:background .25s,border-color .25s;
 }
+.wa-btn span{display:none}
 .wa-btn:hover{background:rgba(198,155,58,.2);border-color:rgba(224,188,99,.5)}
+
+.tel-btn{
+  display:flex;align-items:center;gap:8px;
+  border:1px solid rgba(224,188,99,.5);border-radius:9px;padding:8px 14px;
+  color:var(--gold2);font:700 13px/1 var(--body);letter-spacing:.02em;white-space:nowrap;
+  transition:background .25s,border-color .25s,color .25s;
+}
+.tel-btn:hover{background:rgba(198,155,58,.16);border-color:var(--gold2);color:#fff}
 
 .burger{
   display:none;flex-direction:column;justify-content:center;gap:5px;
@@ -135,6 +146,20 @@ body.menu-open .mnav-in a{transform:none;opacity:1}
 .mnav-in a:nth-child(5){transition-delay:.2s}
 .mnav-in a:nth-child(6){transition-delay:.25s}
 .mnav-cta{color:var(--gold2)!important;border-bottom:0!important}
+.mnav-contacts{
+  display:flex;flex-direction:column;gap:10px;margin-top:22px;
+  opacity:0;transform:translateY(14px);transition:transform .4s ease .3s,opacity .4s ease .3s;
+}
+body.menu-open .mnav-contacts{opacity:1;transform:none}
+.mnav-contacts a{
+  font:700 17px/1 var(--body)!important;letter-spacing:.02em;
+  padding:14px 18px!important;border:1px solid rgba(224,188,99,.45)!important;
+  border-radius:11px;justify-content:center;opacity:1!important;transform:none!important;
+  transition:background .25s!important;
+}
+.mnav-contacts a::before{display:none}
+.mnav-tel{color:var(--gold2)!important}
+.mnav-wa{color:#fff!important;border-color:rgba(255,255,255,.2)!important;background:rgba(255,255,255,.07)}
 
 /* ============ КНОПКИ ============ */
 .btn{
@@ -415,6 +440,12 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
 .ct-info{display:grid;gap:26px;align-content:start}
 .ct-block h3{font:700 13px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:7px}
 .ct-block p{color:var(--tx-inv);font-size:16px;line-height:1.55;margin-bottom:10px}
+.ct-tel{
+  display:inline-block;font:800 clamp(21px,2.4vw,26px)/1.2 var(--disp);
+  letter-spacing:.02em;color:#fff;position:relative;
+}
+.ct-tel::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:2px;background:var(--gold-grad);transition:right .3s ease}
+.ct-tel:hover::after{right:0}
 .ct-deco{width:min(300px,80%);margin-top:8px;opacity:.4}
 
 /* ============ ПОДВАЛ ============ */
@@ -461,6 +492,8 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .nav + .hdr-right{margin-left:auto}
   .wa-btn span{display:none}
   .wa-btn{padding:10px}
+  .tel-btn span{display:none}
+  .tel-btn{padding:10px}
 }
 @media (max-width:960px){
   .about-grid,.stages-grid,.ct-grid{grid-template-columns:1fr}
@@ -492,7 +525,7 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .feat-rev .fm-a{order:1}
   .feat-rev .fm-b{order:2}
   .stages-media{grid-template-columns:1fr 1fr}
-  .brand img{width:48px}
+  .brand-mk{width:40px}
   .brand-t b{font-size:18px;letter-spacing:.18em}
   .marquee-track{gap:22px;padding:12px 0}
   .marquee-track span{font-size:13px}
