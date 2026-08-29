@@ -56,8 +56,13 @@ ul,ol{list-style:none}
   display:flex;align-items:center;gap:20px;
 }
 .brand{display:flex;align-items:center;gap:12px;position:relative;z-index:96}
-.brand-mk{width:46px;height:auto;flex:none;transition:transform .3s ease}
-.brand:hover .brand-mk{transform:translateY(-2px)}
+.brand img{
+  width:54px;height:auto;flex:none;
+  background:var(--paper);padding:9px 11px;border-radius:13px;
+  border:1px solid rgba(198,155,58,.45);box-shadow:0 4px 16px rgba(0,0,0,.35);
+  transition:transform .3s ease,border-color .3s ease;
+}
+.brand:hover img{transform:translateY(-2px);border-color:var(--gold2)}
 .brand-t{display:flex;flex-direction:column;line-height:1.05}
 .brand-t i{font:600 10px/1 var(--disp);letter-spacing:.42em;color:var(--gold2);font-style:normal}
 .brand-t b{font:800 21px/1.1 var(--disp);letter-spacing:.24em;color:#fff}
@@ -525,7 +530,7 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .feat-rev .fm-a{order:1}
   .feat-rev .fm-b{order:2}
   .stages-media{grid-template-columns:1fr 1fr}
-  .brand-mk{width:40px}
+  .brand img{width:46px;padding:7px 9px;border-radius:11px}
   .brand-t b{font-size:18px;letter-spacing:.18em}
   .marquee-track{gap:22px;padding:12px 0}
   .marquee-track span{font-size:13px}
