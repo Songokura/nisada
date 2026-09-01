@@ -1,8 +1,8 @@
 /* ============ NISADA — графит + золото ============ */
 :root{
-  --ink:#101318;          /* графит-чернила */
-  --coal:#151920;         /* тёмная секция */
-  --steel:#1C222B;        /* карточки на тёмном */
+  --ink:#191E26;          /* графит-чернила, светлее прежнего #101318 */
+  --coal:#212833;         /* тёмная секция */
+  --steel:#2B3340;        /* карточки на тёмном */
   --paper:#F5F3EE;        /* тёплая бумага */
   --white:#FFFFFF;
   --gold:#C69B3A;
@@ -10,14 +10,14 @@
   --gold-grad:linear-gradient(115deg,#B8892E 0%,#E0BC63 55%,#C69B3A 100%);
   --tx:#20242B;           /* текст на светлом */
   --tx-soft:#565D68;
-  --tx-inv:#EDEAE3;       /* текст на тёмном */
-  --tx-inv-soft:#A6ACB6;
+  --tx-inv:#F2EFE9;       /* текст на тёмном */
+  --tx-inv-soft:#BAC1CC;
   --line-l:#E3DFD5;
-  --line-d:rgba(255,255,255,.1);
+  --line-d:rgba(255,255,255,.14);
   --disp:"Geologica","Segoe UI",sans-serif;
   --body:"Onest","Segoe UI",sans-serif;
   --hdr-h:74px;
-  --rib:repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 2px,transparent 2px 26px);
+  --rib:repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 2px,transparent 2px 26px);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -49,7 +49,7 @@ ul,ol{list-style:none}
   position:fixed;inset:0 0 auto 0;z-index:100;height:var(--hdr-h);
   background:transparent;transition:background .35s ease,box-shadow .35s ease;
 }
-.hdr.scrolled,body.menu-open .hdr{background:rgba(16,19,24,.97);box-shadow:0 8px 30px rgba(0,0,0,.28)}
+.hdr.scrolled,body.menu-open .hdr{background:rgba(25,30,38,.96);box-shadow:0 8px 30px rgba(0,0,0,.28)}
 .hdr-in{
   max-width:1220px;margin-inline:auto;height:100%;
   padding-inline:clamp(20px,4vw,48px);
@@ -128,7 +128,7 @@ body.menu-open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45de
 
 /* мобильное меню-оверлей */
 .mnav{
-  position:fixed;inset:0;z-index:90;background:rgba(13,16,20,.985);
+  position:fixed;inset:0;z-index:90;background:#171C24;
   opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;
   overflow-y:auto;
 }
@@ -189,40 +189,83 @@ body.menu-open .mnav-contacts{opacity:1;transform:none}
 .hero{
   position:relative;min-height:100svh;display:flex;align-items:center;
   background:var(--ink);color:var(--tx-inv);overflow:hidden;
-  padding:calc(var(--hdr-h) + 40px) 0 110px;
+  padding:calc(var(--hdr-h) + 44px) 0 104px;
 }
-.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
 .hero-bg img{
-  width:100%;height:100%;object-fit:cover;object-position:72% 40%;
-  opacity:.5;filter:saturate(.55) contrast(1.06) brightness(.9);
+  width:100%;height:100%;object-fit:cover;object-position:68% 42%;
+  opacity:.88;filter:saturate(.72) contrast(1.02) brightness(1.12);
+  transform:scale(1.06);
+  animation:heroDrift 30s ease-in-out infinite alternate;
 }
+@keyframes heroDrift{
+  from{transform:scale(1.06) translate3d(0,0,0)}
+  to{transform:scale(1.15) translate3d(-1.6%,-1.8%,0)}
+}
+/* Затемнение держим ровно там, где лежит текст: слева плотно, справа кадр открыт. */
 .hero-bg::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(100deg,rgba(16,19,24,.97) 22%,rgba(16,19,24,.72) 52%,rgba(16,19,24,.3) 100%),
-             linear-gradient(0deg,rgba(16,19,24,.92) 0%,transparent 34%);
+  background:
+    radial-gradient(105% 80% at 76% 26%,rgba(224,188,99,.15) 0%,rgba(224,188,99,0) 60%),
+    linear-gradient(100deg,rgba(20,25,32,.92) 14%,rgba(20,25,32,.6) 52%,rgba(20,25,32,.1) 100%),
+    linear-gradient(0deg,rgba(20,25,32,.86) 0%,rgba(20,25,32,0) 40%);
 }
 .hero-rib{position:absolute;inset:0;z-index:1;background:var(--rib);pointer-events:none}
+
+/* сквозной мотив — треугольник из «A» логотипа, вычерченный как на чертеже */
+.hero-mark{
+  position:absolute;z-index:1;right:clamp(-70px,-2vw,0px);top:50%;
+  width:min(50vw,600px);height:auto;transform:translateY(-52%);
+  pointer-events:none;overflow:visible;
+}
+.hero-mark .hm-l{
+  stroke:var(--gold2);stroke-width:1.2;opacity:.24;
+  stroke-dasharray:1200;stroke-dashoffset:1200;
+  animation:markDraw 2.8s cubic-bezier(.2,.7,.3,1) .35s forwards;
+}
+.hero-mark .hm-2{opacity:.17;animation-delay:.75s}
+.hero-mark .hm-3{opacity:.28;animation-delay:1.15s}
+@keyframes markDraw{to{stroke-dashoffset:0}}
+
 .hero-in{position:relative;z-index:2;width:100%}
 .hero-over{
   display:flex;align-items:center;gap:10px;
   font:600 13px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);
-  margin-bottom:26px;
+  margin-bottom:24px;
 }
 .hero-h1{font:800 clamp(30px,6.4vw,84px)/1.06 var(--disp);letter-spacing:.005em;color:#fff;text-wrap:balance}
 .h1-line{display:block;overflow:hidden}
 .h1-inner{display:inline-block}
 .hero-h1 .gold{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-lead{
-  margin-top:26px;font-size:clamp(16px,1.5vw,19px);color:var(--tx-inv-soft);line-height:1.65;
+  margin-top:26px;font-size:clamp(16px,1.5vw,19px);color:#DDE1E8;line-height:1.65;
+  text-shadow:0 1px 18px rgba(16,20,26,.5);
 }
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
-.hero-facts{
-  display:flex;flex-wrap:wrap;gap:14px 44px;margin-top:52px;
-  border-top:1px solid var(--line-d);padding-top:26px;
+
+/* подсказка прокрутки — вместо плиток-достижений, они живут в блоке доверия ниже */
+.hero-scroll{
+  display:inline-flex;align-items:center;gap:13px;margin-top:52px;
+  font:600 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tx-inv-soft);transition:color .3s ease;
 }
-.hero-facts li{display:flex;flex-direction:column;gap:3px}
-.hero-facts b{font:700 clamp(20px,2vw,26px)/1.1 var(--disp);color:var(--gold2);white-space:nowrap}
-.hero-facts span{font-size:13px;color:var(--tx-inv-soft);max-width:220px;line-height:1.45}
+.hero-scroll:hover{color:var(--gold2)}
+.hero-scroll .hs-arrow{
+  width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:50%;
+  border:1px solid rgba(224,188,99,.5);color:var(--gold2);
+  transition:border-color .3s ease,background .3s ease;
+}
+.hero-scroll:hover .hs-arrow{background:rgba(224,188,99,.12);border-color:var(--gold2)}
+.hero-scroll .hs-arrow svg{width:13px;height:19px;animation:hsBob 2.1s ease-in-out infinite}
+@keyframes hsBob{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}
+
+/* вертикальная подпись у правого края — балансирует композицию */
+.hero-sign{
+  position:absolute;z-index:2;right:22px;bottom:124px;
+  transform:rotate(180deg);writing-mode:vertical-rl;
+  font:600 11px/1 var(--body);letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.34);pointer-events:none;
+}
 .hero-truss{
   position:absolute;left:0;right:0;bottom:-2px;z-index:1;width:100%;height:90px;opacity:.5;
 }
@@ -329,7 +372,7 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
 .feat-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.04);transition:transform .6s ease}
 .feat-media figure:hover img{transform:scale(1.04)}
 .fm-a{aspect-ratio:4/4.4;clip-path:polygon(0 0,100% 0,100% calc(100% - 48px),calc(100% - 48px) 100%,0 100%);border-radius:14px}
-.fm-b{aspect-ratio:4/3.1;margin-bottom:34px;box-shadow:0 18px 44px rgba(16,19,24,.16)}
+.fm-b{aspect-ratio:4/3.1;margin-bottom:34px;box-shadow:0 18px 44px rgba(25,30,38,.16)}
 .feat-rev .feat-media{grid-template-columns:5fr 7fr}
 .feat-rev .fm-a{order:2}
 .feat-rev .fm-b{order:1}
@@ -501,6 +544,15 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .tel-btn{padding:10px}
 }
 @media (max-width:960px){
+  /* на планшете и телефоне текст лежит поверх всего кадра — гасим фото по вертикали */
+  .hero-bg::after{
+    background:
+      radial-gradient(90% 55% at 72% 22%,rgba(224,188,99,.14) 0%,rgba(224,188,99,0) 62%),
+      linear-gradient(180deg,rgba(20,25,32,.78) 0%,rgba(20,25,32,.52) 34%,rgba(20,25,32,.94) 100%);
+  }
+  .hero-bg img{object-position:64% 40%}
+  .hero-mark{width:min(86vw,520px);right:-22vw;top:34%}
+  .hero-sign{display:none}
   .about-grid,.stages-grid,.ct-grid{grid-template-columns:1fr}
   .feat-in,.feat-rev .feat-in{grid-template-columns:1fr}
   .feat-rev .feat-txt{order:1}
@@ -520,10 +572,9 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .hdr-right{gap:8px}
   .brand{gap:9px}
   .lang button{padding:6px 11px}
-  .hero{padding-bottom:90px}
-  .hero-facts{gap:16px 26px}
-  .hero-facts span{max-width:170px}
+  .hero{padding-bottom:86px}
   .hero-cta .btn{width:100%}
+  .hero-scroll{margin-top:38px;font-size:11px;letter-spacing:.12em}
   .feat-media{grid-template-columns:1fr;align-items:stretch}
   .fm-a{aspect-ratio:4/3.4}
   .fm-b{margin-bottom:0;aspect-ratio:4/2.7}
@@ -545,5 +596,8 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .reveal,.reveal-img,.reveal-line{opacity:1;transform:none;clip-path:none;transition:none}
   .marquee-track{animation:none;width:auto;flex-wrap:wrap;justify-content:center}
   .truss-line{stroke-dashoffset:0;animation:none}
+  .hero-bg img{animation:none;transform:scale(1.04)}
+  .hero-mark .hm-l{stroke-dashoffset:0;animation:none}
+  .hero-scroll .hs-arrow svg{animation:none}
   .mnav,.mnav-in a,.hdr,.btn,.feat-media img{transition:none}
 }
