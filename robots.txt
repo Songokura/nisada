@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://songokura.github.io/nisada/sitemap.xml
+Sitemap: https://nisada.kz/sitemap.xml

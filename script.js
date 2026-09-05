@@ -231,9 +231,18 @@ document.querySelectorAll(".lang button").forEach(b => {
 });
 
 (function initLang(){
-  let saved = null;
-  try { saved = localStorage.getItem("nisada-lang"); } catch (e) {}
-  if (saved && saved !== "ru") applyLang(saved);
+  /* ?lang=ru|kk в адресе главнее сохранённого выбора: объявление на русском
+     обязано открывать русскую версию, даже если раньше смотрели казахскую */
+  let want = null;
+  try {
+    const q = new URLSearchParams(location.search).get("lang");
+    if (q) want = q.toLowerCase();
+  } catch (e) {}
+  if (!want || !I18N[want]) {
+    want = null;
+    try { want = localStorage.getItem("nisada-lang"); } catch (e) {}
+  }
+  if (want && I18N[want]) applyLang(want);
 })();
 
 /* ============ шапка: фон при скролле + прогресс ============ */
