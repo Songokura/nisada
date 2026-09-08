@@ -150,6 +150,7 @@ body.menu-open .mnav-in a{transform:none;opacity:1}
 .mnav-in a:nth-child(4){transition-delay:.15s}
 .mnav-in a:nth-child(5){transition-delay:.2s}
 .mnav-in a:nth-child(6){transition-delay:.25s}
+.mnav-in a:nth-child(7){transition-delay:.3s}
 .mnav-cta{color:var(--gold2)!important;border-bottom:0!important}
 .mnav-contacts{
   display:flex;flex-direction:column;gap:10px;margin-top:22px;
@@ -234,6 +235,8 @@ body.menu-open .mnav-contacts{opacity:1;transform:none}
   margin-bottom:24px;
 }
 .hero-h1{font:800 clamp(30px,6.4vw,84px)/1.06 var(--disp);letter-spacing:.005em;color:#fff;text-wrap:balance}
+/* казахская строка длиннее русской - кегль ниже, иначе заголовок уезжает на пять строк */
+html[lang="kk"] .hero-h1{font-size:clamp(26px,4.6vw,60px);line-height:1.08}
 .h1-line{display:block;overflow:hidden}
 .h1-inner{display:inline-block}
 .hero-h1 .gold{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -282,7 +285,7 @@ body.menu-open .mnav-contacts{opacity:1;transform:none}
 }
 .marquee-track{
   display:flex;align-items:center;gap:34px;width:max-content;
-  padding:15px 0;animation:mq 30s linear infinite;
+  padding:15px 0;animation:mq 44s linear infinite;
 }
 .marquee-track span{font:700 15px/1 var(--disp);letter-spacing:.22em;white-space:nowrap}
 .marquee-track .tri{background:#181205;width:10px;height:9px}
@@ -377,6 +380,37 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
 .feat-rev .feat-media{grid-template-columns:5fr 7fr}
 .feat-rev .fm-a{order:2}
 .feat-rev .fm-b{order:1}
+
+/* ============ МАТЕРИАЛЫ ============ */
+.mats{position:relative;background:var(--coal);color:var(--tx-inv);padding:104px 0 96px;overflow:hidden}
+.mats-rib{position:absolute;inset:0;background:var(--rib);pointer-events:none}
+.mats .wrap{position:relative}
+.mats h2{color:#fff}
+.mats .lead{color:var(--tx-inv-soft)}
+.mats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
+.mcard{
+  background:var(--steel);border:1px solid var(--line-d);border-radius:16px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:border-color .3s,transform .3s,background .3s;
+}
+.mcard:hover{transform:translateY(-5px);border-color:rgba(224,188,99,.45);background:#20262f}
+.mcard-img{position:relative;aspect-ratio:3/2;overflow:hidden;background:#12161c}
+.mcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.mcard:hover .mcard-img img{transform:scale(1.06)}
+.mcard-img::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(33,40,51,0) 45%,rgba(33,40,51,.75) 100%);
+}
+.mcard-b{padding:20px 22px 24px}
+.mcard h3{font:700 18px/1.25 var(--disp);color:#fff;margin-bottom:9px;min-height:2.5em}
+.mcard p{font-size:14px;color:var(--tx-inv-soft);line-height:1.6}
+.mats-note{
+  margin-top:24px;display:flex;gap:14px;align-items:flex-start;
+  border:1px solid rgba(224,188,99,.34);border-radius:14px;
+  padding:18px 22px;background:rgba(198,155,58,.09);
+}
+.mats-note .tri{margin-top:6px}
+.mats-note p{font-size:15.5px;color:var(--tx-inv);line-height:1.6}
 
 /* ============ РАБОТЫ ПО ЛИЦЕНЗИИ ============ */
 .works{position:relative;background:var(--coal);color:var(--tx-inv);padding:110px 0;overflow:hidden}
@@ -535,7 +569,13 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.42s}
 
 /* ============ АДАПТИВ ============ */
-@media (max-width:1180px){
+/* до 1460px номер в шапке остаётся иконкой: с шестым пунктом меню строка иначе не помещается,
+   особенно на казахском - подписи длиннее русских */
+@media (max-width:1460px){
+  .tel-btn span{display:none}
+  .tel-btn{padding:10px}
+}
+@media (max-width:1280px){
   .nav{display:none}
   .burger{display:flex}
   .nav + .hdr-right{margin-left:auto}
@@ -559,6 +599,8 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .feat-rev .feat-txt{order:1}
   .feat-rev .feat-media{order:2}
   .works-grid{grid-template-columns:1fr 1fr}
+  .mats-grid{grid-template-columns:1fr 1fr}
+  .mats{padding:80px 0}
   .stats{grid-template-columns:1fr 1fr}
   .lic-rows{grid-template-columns:1fr}
   .stages-media{position:static}
@@ -568,6 +610,10 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
 }
 @media (max-width:560px){
   .works-grid{grid-template-columns:1fr}
+  .mats-grid{grid-template-columns:1fr}
+  .mcard h3{min-height:0}
+  .mats-note{padding:16px 18px}
+  .mats-note p{font-size:14.5px}
   .wa-btn{display:none}
   .hdr-in{gap:14px}
   .hdr-right{gap:8px}
