@@ -88,3 +88,15 @@
 
   apply(pick());
 })();
+
+/* Конверсия «Интерактивные номера телефонов» - на правовой странице есть свои ссылки tel:
+   (шапка и разделы 1, 10, 12). Глобальный тег и gtag_report_conversion объявлены в head. */
+document.addEventListener("click", function (e) {
+  if (e.target.closest('a[href^="tel:"]') && typeof gtag === "function") {
+    gtag("event", "conversion", {
+      "send_to": "AW-18442003771/rVHuCJO5hPMcELvK6tlE",
+      "value": 1.0,
+      "currency": "USD"
+    });
+  }
+}, true);

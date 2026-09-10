@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;500;600;700;800&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260910-3">
+<link rel="stylesheet" href="styles.css?v=20260910-4">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -44,6 +44,30 @@
   "areaServed": "Алматы и Алматинская область",
   "knowsAbout": ["ангары", "склады", "сэндвич-панели", "быстровозводимые здания", "металлокаркас", "монолитный железобетон", "кирпичная кладка", "коммерческие здания", "офисные здания"]
 }
+</script>
+<!-- Google tag (gtag.js) - Google Ads AW-18442003771 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18442003771"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18442003771');
+
+  /* Конверсия «Интерактивные номера телефонов». Сниппет Google возвращает false и
+     уводит на url в event_callback; у нас ссылки tel: обрабатываются слушателем в
+     script.js без preventDefault - переход к звонку не должен ждать ответа Google. */
+  function gtag_report_conversion(url) {
+    var callback = function () {
+      if (typeof(url) != 'undefined') { window.location = url; }
+    };
+    gtag('event', 'conversion', {
+      'send_to': 'AW-18442003771/rVHuCJO5hPMcELvK6tlE',
+      'value': 1.0,
+      'currency': 'USD',
+      'event_callback': callback
+    });
+    return false;
+  }
 </script>
 </head>
 <body>
@@ -556,6 +580,6 @@
   </div>
 </div>
 
-<script src="script.js?v=20260910-3" defer></script>
+<script src="script.js?v=20260910-4" defer></script>
 </body>
 </html>

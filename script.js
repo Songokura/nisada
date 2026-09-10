@@ -535,6 +535,7 @@ document.addEventListener("click", e => {
       "\n" + t("ct.phone") + ": " + fPhone.value.trim() +
       "\n" + t("ct.type") + ": " + fType.value +
       (fMsg.value.trim() ? "\n" + t("ct.msg") + ": " + fMsg.value.trim() : "");
+    adsConversion("A5f5CPfhjPMcELvK6tlE");   /* Отправка формы для потенциальных клиентов */
     if (WHATSAPP_PHONE){
       window.open(buildWaUrl(text), "_blank", "noopener");
     }
@@ -543,3 +544,33 @@ document.addEventListener("click", e => {
     ok.scrollIntoView({ block: "nearest", behavior: "smooth" });
   });
 })();
+
+/* ============ Конверсии Google Ads (AW-18442003771) ============
+   Три цели из кабинета клиента:
+     rVHuCJO5hPMcELvK6tlE - Интерактивные номера телефонов (клик по tel:)
+     A5f5CPfhjPMcELvK6tlE - Отправка формы для потенциальных клиентов (см. submit формы)
+     ePnJCJmoj_McELvK6tlE - Контакт (клик по кнопке WhatsApp)
+   Слушатели делегированные: кнопок звонка и WhatsApp на странице по несколько
+   (шапка, герой, контакты, мобильное меню), вешать onclick на каждую - лишний повод
+   что-то забыть при следующей правке разметки. */
+function adsConversion(label){
+  if (typeof gtag !== "function") return;   /* блокировщик рекламы или тег не загрузился */
+  gtag("event", "conversion", {
+    "send_to": "AW-18442003771/" + label,
+    "value": 1.0,
+    "currency": "USD"
+  });
+}
+
+document.addEventListener("click", function (e) {
+  const tel = e.target.closest('a[href^="tel:"]');
+  if (tel) {
+    /* Без preventDefault: на телефоне переход к набору номера не должен ждать ответа
+       Google, иначе часть звонков теряется. Событие уходит параллельно. */
+    adsConversion("rVHuCJO5hPMcELvK6tlE");
+    return;
+  }
+  if (e.target.closest("[data-wa]")) {
+    adsConversion("ePnJCJmoj_McELvK6tlE");   /* Контакт */
+  }
+}, true);
