@@ -113,7 +113,15 @@ const I18N = {
     "err.name": "Укажите имя", "err.phone": "Укажите телефон в формате +7",
     "ft.r1": "ТОО «NISADA» · г. Алматы, ул. Кулимана, 1 · +7 706 806 12 22",
     "ft.r2": "Госрегистрация — 18.11.2008 · Генеральная гослицензия ГСЛ № 03648 от 01.06.2009",
-    "ft.r3": "Фотографии на сайте — иллюстрации отрасли (Unsplash).",
+    "ft.r3": "Фото объектов на сайте - из архива ТОО «NISADA».",
+    "mv.badge": "Видео с объекта",
+    "mv.over": "Монолит в работе",
+    "mv.h3": "Заливка монолитного перекрытия",
+    "mv.d": "Бетононасос, опалубка ригелей, арматурный каркас - так наш монолитный железобетон выглядит на объекте, а не на картинке.",
+    "mv.btn": "Смотреть со звуком",
+    "mv.playaria": "Смотреть ролик со звуком",
+    "mv.dialog": "Видео с объекта",
+    "mv.close": "Закрыть видео",
     "ft.c": "© 2026 ТОО «NISADA». Строим надёжное будущее.",
     "toast.wa": "Номер WhatsApp скоро появится — оставьте заявку в форме, и мы свяжемся с вами.",
     "wa.default": "Здравствуйте! Пишу с сайта NISADA. Хочу обсудить строительство."
@@ -225,7 +233,15 @@ const I18N = {
     "err.name": "Атыңызды көрсетіңіз", "err.phone": "Телефонды +7 форматында көрсетіңіз",
     "ft.r1": "«NISADA» ЖШС · Алматы қ., Кулиман көшесі, 1 · +7 706 806 12 22",
     "ft.r2": "Мемлекеттік тіркеу — 18.11.2008 · ГСЛ № 03648 бас мемлекеттік лицензиясы, 01.06.2009",
-    "ft.r3": "Сайттағы фотосуреттер — сала иллюстрациялары (Unsplash).",
+    "ft.r3": "Сайттағы нысандардың фотосуреттері - «NISADA» ЖШС мұрағатынан.",
+    "mv.badge": "Нысаннан түсірілген видео",
+    "mv.over": "Жұмыс үстіндегі монолит",
+    "mv.h3": "Монолитті жабынды құю",
+    "mv.d": "Бетон сорғысы, ригель қалыбы, арматура қаңқасы - біздің монолитті темірбетон суретте емес, нысанда осылай көрінеді.",
+    "mv.btn": "Дыбысымен көру",
+    "mv.playaria": "Роликті дыбысымен көру",
+    "mv.dialog": "Нысаннан түсірілген видео",
+    "mv.close": "Видеоны жабу",
     "ft.c": "© 2026 «NISADA» ЖШС. Сенімді болашақты құрамыз.",
     "toast.wa": "WhatsApp нөмірі жақын арада пайда болады — формада өтінім қалдырыңыз, біз сізбен хабарласамыз.",
     "wa.default": "Сәлеметсіз бе! NISADA сайтынан жазып отырмын. Құрылысты талқылағым келеді."
@@ -411,6 +427,74 @@ document.addEventListener("click", e => {
     showToast(t("toast.wa"));
   }
 });
+
+/* ============ видео с объекта: немая петля по видимости + полный ролик в модалке ============ */
+(function(){
+  const player = document.getElementById("mvPlayer");
+  const loop = player ? player.querySelector(".mv-loop") : null;
+  const modal = document.getElementById("vmodal");
+  const full = document.getElementById("vmodalVideo");
+  if (!player || !loop || !modal || !full) return;
+
+  /* src подставляем только когда карточка видна на ~55% - preload="none" без src ничего не качает.
+     Класс is-live ставим по событию playing, а не сразу: иначе мигает чёрный кадр вместо постера. */
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  loop.addEventListener("playing", () => player.classList.add("is-live"));
+  function startLoop(){
+    if (!loop.getAttribute("src")){
+      loop.setAttribute("src", loop.getAttribute("data-src"));
+      loop.load();
+    }
+    const pr = loop.play();
+    if (pr && pr.catch) pr.catch(() => {});
+  }
+  function stopLoop(){
+    loop.pause();
+    player.classList.remove("is-live");
+    if (loop.getAttribute("src")){
+      loop.removeAttribute("src");
+      loop.load();
+    }
+  }
+  if (!reduce && "IntersectionObserver" in window){
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting && en.intersectionRatio >= 0.55) startLoop();
+        else if (!en.isIntersecting) stopLoop();
+      });
+    }, { threshold: [0, 0.55] });
+    io.observe(player);
+  }
+
+  /* модалка: открываем классом; hidden здесь не работает - display из .vmodal его перебьёт */
+  let lastFocus = null;
+  function openModal(){
+    lastFocus = document.activeElement;
+    stopLoop();
+    if (!full.getAttribute("src")){
+      full.setAttribute("src", full.getAttribute("data-src"));
+      full.load();
+    }
+    modal.classList.add("open");
+    document.body.classList.add("vmodal-open");
+    full.currentTime = 0;
+    const pr = full.play();
+    if (pr && pr.catch) pr.catch(() => {});
+    requestAnimationFrame(() => modal.querySelector(".vmodal-close").focus());
+  }
+  function closeModal(){
+    if (!modal.classList.contains("open")) return;
+    full.pause();
+    modal.classList.remove("open");
+    document.body.classList.remove("vmodal-open");
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll("[data-mv-open]").forEach(b => b.addEventListener("click", openModal));
+  modal.querySelector(".vmodal-close").addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+  window.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+  full.addEventListener("ended", closeModal);
+})();
 
 /* ============ форма заявки ============ */
 (function(){

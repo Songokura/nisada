@@ -193,8 +193,11 @@ body.menu-open .mnav-contacts{opacity:1;transform:none}
   padding:calc(var(--hdr-h) + 44px) 0 104px;
 }
 .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+/* picture без размеров схлопывается в ноль - растягиваем явно */
+.hero-bg picture{display:block;width:100%;height:100%}
+/* реальный корпус клиента: здание в правых двух третях кадра, текст слева */
 .hero-bg img{
-  width:100%;height:100%;object-fit:cover;object-position:68% 42%;
+  width:100%;height:100%;object-fit:cover;object-position:74% 50%;
   opacity:.88;filter:saturate(.72) contrast(1.02) brightness(1.12);
   transform:scale(1.06);
   animation:heroDrift 30s ease-in-out infinite alternate;
@@ -404,6 +407,72 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
 .mcard-b{padding:20px 22px 24px}
 .mcard h3{font:700 18px/1.25 var(--disp);color:#fff;margin-bottom:9px;min-height:2.5em}
 .mcard p{font-size:14px;color:var(--tx-inv-soft);line-height:1.6}
+/* ---- видео с объекта: заливка монолита ---- */
+.mats-video{
+  margin-top:24px;display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr);
+  gap:clamp(24px,4vw,56px);align-items:center;
+  background:var(--steel);border:1px solid var(--line-d);border-radius:16px;
+  padding:clamp(18px,2.6vw,30px);position:relative;overflow:hidden;
+}
+.mats-video::after{
+  content:"";position:absolute;right:-60px;bottom:-70px;width:260px;height:230px;opacity:.07;
+  background:var(--gold-grad);clip-path:polygon(50% 0,100% 100%,0 100%);pointer-events:none;
+}
+.mv-player{
+  position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#12161c;
+  box-shadow:0 18px 44px rgba(0,0,0,.35);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 34px),calc(100% - 34px) 100%,0 100%);
+}
+.mv-player img,.mv-player video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+}
+.mv-player video{opacity:0;transition:opacity .5s ease}
+.mv-player.is-live video{opacity:1}
+.mv-badge{
+  position:absolute;left:12px;top:12px;z-index:2;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(18,22,28,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;padding:6px 12px 6px 9px;
+  font:600 11px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:#fff;
+}
+.mv-badge i{width:8px;height:8px;border-radius:50%;background:var(--gold2);box-shadow:0 0 0 0 rgba(224,188,99,.6);animation:mvPulse 1.8s ease-out infinite}
+@keyframes mvPulse{to{box-shadow:0 0 0 8px rgba(224,188,99,0)}}
+.mv-play{
+  position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);
+  width:68px;height:68px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--gold-grad);color:#181205;display:grid;place-items:center;padding-left:4px;
+  box-shadow:0 12px 30px rgba(0,0,0,.45),0 0 0 8px rgba(224,188,99,.16);
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.mv-play:hover{transform:translate(-50%,-50%) scale(1.06);box-shadow:0 14px 34px rgba(0,0,0,.5),0 0 0 12px rgba(224,188,99,.22)}
+.mv-over{
+  display:flex;align-items:center;gap:10px;
+  font:600 12px/1.3 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);
+  margin-bottom:14px;
+}
+.mv-txt h3{font:700 clamp(22px,2.4vw,32px)/1.15 var(--disp);color:#fff}
+.mv-txt > p{margin-top:12px;font-size:15.5px;color:var(--tx-inv-soft);line-height:1.6}
+.mv-txt .btn{margin-top:22px}
+
+/* модальный плеер: полный ролик со звуком. Открывается КЛАССОМ, не hidden - иначе display перебивает */
+.vmodal{
+  position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,12,16,.94);opacity:0;visibility:hidden;
+  transition:opacity .3s ease,visibility .3s ease;padding:20px;
+}
+.vmodal.open{opacity:1;visibility:visible}
+.vmodal-in{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);background:#000}
+.vmodal video{
+  display:block;height:min(74vh,860px);width:auto;max-width:calc(100vw - 40px);
+  aspect-ratio:9/16;object-fit:contain;background:#000;
+}
+.vmodal-close{
+  position:absolute;top:18px;right:18px;width:48px;height:48px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;
+  display:grid;place-items:center;transition:background .25s,border-color .25s;
+}
+.vmodal-close:hover{background:rgba(198,155,58,.22);border-color:var(--gold2)}
+body.vmodal-open{overflow:hidden}
+
 .mats-note{
   margin-top:24px;display:flex;gap:14px;align-items:flex-start;
   border:1px solid rgba(224,188,99,.34);border-radius:14px;
@@ -591,7 +660,7 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
       radial-gradient(90% 55% at 72% 22%,rgba(224,188,99,.14) 0%,rgba(224,188,99,0) 62%),
       linear-gradient(180deg,rgba(20,25,32,.78) 0%,rgba(20,25,32,.52) 34%,rgba(20,25,32,.94) 100%);
   }
-  .hero-bg img{object-position:64% 40%}
+  .hero-bg img{object-position:60% 45%}
   .hero-mark{width:min(86vw,520px);right:-22vw;top:34%}
   .hero-sign{display:none}
   .about-grid,.stages-grid,.ct-grid{grid-template-columns:1fr}
@@ -601,6 +670,9 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .works-grid{grid-template-columns:1fr 1fr}
   .mats-grid{grid-template-columns:1fr 1fr}
   .mats{padding:80px 0}
+  .mats-video{grid-template-columns:1fr;text-align:center}
+  .mv-over{justify-content:center}
+  .mv-player{width:min(100%,300px);margin-inline:auto}
   .stats{grid-template-columns:1fr 1fr}
   .lic-rows{grid-template-columns:1fr}
   .stages-media{position:static}
@@ -608,12 +680,22 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .about,.svc,.works,.stages,.lic,.ct{padding:80px 0}
   .svc{padding-bottom:30px}
 }
+@media (max-width:760px){
+  /* портретный кроп корпуса: угол здания с лестницей по центру, верх гасим под шапку и кикер */
+  .hero-bg img{object-position:50% 50%;opacity:.92;filter:saturate(.8) contrast(1.02) brightness(1.04)}
+  .hero-bg::after{
+    background:
+      radial-gradient(80% 40% at 50% 18%,rgba(224,188,99,.12) 0%,rgba(224,188,99,0) 70%),
+      linear-gradient(180deg,rgba(20,25,32,.82) 0%,rgba(20,25,32,.58) 30%,rgba(20,25,32,.62) 60%,rgba(20,25,32,.95) 100%);
+  }
+}
 @media (max-width:560px){
   .works-grid{grid-template-columns:1fr}
   .mats-grid{grid-template-columns:1fr}
   .mcard h3{min-height:0}
   .mats-note{padding:16px 18px}
   .mats-note p{font-size:14.5px}
+  .mv-player{width:min(100%,280px);margin-inline:auto}
   .wa-btn{display:none}
   .hdr-in{gap:14px}
   .hdr-right{gap:8px}
@@ -622,7 +704,8 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .hero{padding-bottom:86px}
   .hero-cta .btn{width:100%}
   .hero-scroll{margin-top:38px;font-size:11px;letter-spacing:.12em}
-  .feat-media{grid-template-columns:1fr;align-items:stretch}
+  /* перебиваем .feat-rev .feat-media (0-2-0): иначе у перевёрнутых блоков на телефоне две мелкие колонки */
+  .feat-media,.feat-rev .feat-media{grid-template-columns:1fr;align-items:stretch}
   .fm-a{aspect-ratio:4/3.4}
   .fm-b{margin-bottom:0;aspect-ratio:4/2.7}
   .feat-rev .fm-a{order:1}
@@ -646,5 +729,7 @@ h2{font:700 clamp(30px,4.2vw,54px)/1.12 var(--disp);letter-spacing:.005em;text-w
   .hero-bg img{animation:none;transform:scale(1.04)}
   .hero-mark .hm-l{stroke-dashoffset:0;animation:none}
   .hero-scroll .hs-arrow svg{animation:none}
+  .mv-badge i{animation:none}
+  .vmodal,.mv-player video{transition:none}
   .mnav,.mnav-in a,.hdr,.btn,.feat-media img{transition:none}
 }

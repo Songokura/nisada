@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;500;600;700;800&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260908-1">
+<link rel="stylesheet" href="styles.css?v=20260910-1">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -53,7 +53,7 @@
 <header class="hdr" id="hdr">
   <div class="hdr-in">
     <a class="brand" href="#glavnaya" aria-label="NISADA — на главную">
-      <img src="assets/logo-mark.webp" alt="Знак NISADA — здание ангара" width="52" height="36">
+      <img src="assets/logo-mark.webp" alt="Знак NISADA — здание ангара" width="760" height="346">
       <span class="brand-t"><i data-i18n="brand.too">ТОО</i><b>NISADA</b></span>
     </a>
     <nav class="nav" id="nav" aria-label="Основная навигация">
@@ -90,7 +90,10 @@
   <!-- HERO -->
   <section class="hero" id="glavnaya">
     <div class="hero-bg" aria-hidden="true">
-      <img src="assets/hero-steel-frame.webp" alt="" width="1600" height="1067" fetchpriority="high" decoding="async">
+      <picture>
+        <source media="(max-width:760px)" srcset="assets/hero-obekt-m.webp" width="675" height="1200">
+        <img src="assets/hero-obekt.webp" alt="" width="1600" height="1000" fetchpriority="high" decoding="async">
+      </picture>
     </div>
     <div class="hero-rib" aria-hidden="true"></div>
     <svg class="hero-mark" viewBox="0 0 420 360" fill="none" aria-hidden="true">
@@ -152,14 +155,14 @@
       <p class="lead reveal" data-i18n="mat.lead">Металлокаркас, монолитный железобетон, кирпич и блоки - конструктив подбираем под задачу и бюджет, а не под один привычный материал.</p>
       <div class="mats-grid">
         <article class="mcard reveal">
-          <div class="mcard-img"><img src="assets/mat-metall.webp" alt="Стальной каркас склада на этапе монтажа" width="900" height="600" loading="lazy" decoding="async"></div>
+          <div class="mcard-img"><img src="assets/mat-metall-karkas.webp" alt="Монтаж металлокаркаса производственного здания - объект NISADA" width="900" height="600" loading="lazy" decoding="async"></div>
           <div class="mcard-b">
             <h3 data-i18n="m1.t">Металлокаркас</h3>
             <p data-i18n="m1.d">Сборный каркас из балок и ферм: быстрый монтаж, лёгкий фундамент, большие пролёты без колонн внутри.</p>
           </div>
         </article>
         <article class="mcard reveal d1">
-          <div class="mcard-img"><img src="assets/mat-monolit.webp" alt="Монолитный железобетонный каркас здания в опалубке" width="900" height="600" loading="lazy" decoding="async"></div>
+          <div class="mcard-img"><img src="assets/mat-monolit-zalivka.webp" alt="Опалубка монолитных ригелей и колонн на объекте NISADA" width="576" height="384" loading="lazy" decoding="async"></div>
           <div class="mcard-b">
             <h3 data-i18n="m2.t">Монолитный железобетон</h3>
             <p data-i18n="m2.d">Фундамент, колонны, ригели и перекрытия в опалубке. Прочный несгораемый каркас - часто дешевле металла.</p>
@@ -173,12 +176,31 @@
           </div>
         </article>
         <article class="mcard reveal d3">
-          <div class="mcard-img"><img src="assets/mat-kombi.webp" alt="Фасад здания с металлическим подконструктивом и утеплением" width="900" height="600" loading="lazy" decoding="async"></div>
+          <div class="mcard-img"><img src="assets/mat-kombi-fasad.webp" alt="Сэндвич-панели на металлокаркасе рядом с кирпичной стеной - комбинированное решение" width="900" height="600" loading="lazy" decoding="async"></div>
           <div class="mcard-b">
             <h3 data-i18n="m4.t">Комбинированные решения</h3>
             <p data-i18n="m4.d">Бетонный каркас с кладкой, металл с монолитными перекрытиями, фасад из панелей или штукатурки.</p>
           </div>
         </article>
+      </div>
+      <div class="mats-video reveal">
+        <div class="mv-player" id="mvPlayer">
+          <img class="mv-poster" src="assets/monolit-poster.webp" alt="Заливка монолитного перекрытия бетононасосом на объекте NISADA" width="480" height="854" loading="lazy" decoding="async">
+          <video class="mv-loop" muted loop playsinline preload="none" data-src="assets/monolit-loop.mp4" aria-hidden="true" tabindex="-1"></video>
+          <span class="mv-badge"><i aria-hidden="true"></i><span data-i18n="mv.badge">Видео с объекта</span></span>
+          <button class="mv-play" type="button" data-mv-open aria-label="Смотреть ролик со звуком" data-i18n-aria="mv.playaria">
+            <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg>
+          </button>
+        </div>
+        <div class="mv-txt">
+          <p class="mv-over"><span class="tri" aria-hidden="true"></span><span data-i18n="mv.over">Монолит в работе</span></p>
+          <h3 data-i18n="mv.h3">Заливка монолитного перекрытия</h3>
+          <p data-i18n="mv.d">Бетононасос, опалубка ригелей, арматурный каркас - так наш монолитный железобетон выглядит на объекте, а не на картинке.</p>
+          <button class="btn btn-gold" type="button" data-mv-open>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg>
+            <span data-i18n="mv.btn">Смотреть со звуком</span>
+          </button>
+        </div>
       </div>
       <div class="mats-note reveal">
         <span class="tri" aria-hidden="true"></span>
@@ -199,7 +221,7 @@
           <p data-i18n="about.p3">Собственная производственная база позволяет держать в одних руках весь процесс: от заготовки металлоконструкций до монтажа и сдачи объекта.</p>
         </div>
         <figure class="about-img reveal-img">
-          <img src="assets/karkas-roof.webp" alt="Металлокаркас кровли промышленного здания в лучах солнца" width="1200" height="800" loading="lazy" decoding="async">
+          <img src="assets/o-kompanii-ceh.webp" alt="Производственный корпус NISADA изнутри: белый металлокаркас, световой фонарь, армирование пола" width="1200" height="800" loading="lazy" decoding="async">
           <span class="img-tri" aria-hidden="true"></span>
         </figure>
       </div>
@@ -233,8 +255,8 @@
           <a class="feat-link reveal" href="#kontakty" data-i18n="f1.cta">Обсудить ангар</a>
         </div>
         <div class="feat-media">
-          <figure class="fm-a reveal-img"><img src="assets/angar-arch.webp" alt="Арочный ангар с ограждением из профилированного металла" width="1000" height="1176" loading="lazy" decoding="async"></figure>
-          <figure class="fm-b reveal-img"><img src="assets/hero-steel-frame.webp" alt="Стальной каркас ангара на этапе монтажа" width="1600" height="1067" loading="lazy" decoding="async"></figure>
+          <figure class="fm-a reveal-img"><img src="assets/angar-gotovyy.webp" alt="Готовый ангар NISADA из сэндвич-панелей с двумя воротами" width="800" height="880" loading="lazy" decoding="async"></figure>
+          <figure class="fm-b reveal-img"><img src="assets/angar-karkas.webp" alt="Металлокаркас ангара на этапе монтажа - объект NISADA" width="900" height="698" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </article>
@@ -252,8 +274,8 @@
           <a class="feat-link reveal" href="#kontakty" data-i18n="f2.cta">Обсудить склад</a>
         </div>
         <div class="feat-media">
-          <figure class="fm-a reveal-img"><img src="assets/sklad-interior.webp" alt="Интерьер склада на металлокаркасе со светлым полом" width="1200" height="800" loading="lazy" decoding="async"></figure>
-          <figure class="fm-b reveal-img"><img src="assets/sklad-racking.webp" alt="Высотные стеллажи товарного склада" width="1200" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="fm-a reveal-img"><img src="assets/sklad-interer.webp" alt="Склад NISADA изнутри: кран-балка и утеплённая кровля" width="800" height="880" loading="lazy" decoding="async"></figure>
+          <figure class="fm-b reveal-img"><img src="assets/sklad-gotovyy.webp" alt="Готовый склад NISADA из сэндвич-панелей с ленточным остеклением" width="900" height="698" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </article>
@@ -271,8 +293,8 @@
           <a class="feat-link reveal" href="#kontakty" data-i18n="f3.cta">Обсудить панели</a>
         </div>
         <div class="feat-media">
-          <figure class="fm-a reveal-img"><img src="assets/panels-wall.webp" alt="Протяжённый фасад из светлых сэндвич-панелей" width="1600" height="1067" loading="lazy" decoding="async"></figure>
-          <figure class="fm-b reveal-img"><img src="assets/bystro-ext.webp" alt="Быстровозводимое здание склада с панельным фасадом" width="1200" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="fm-a reveal-img"><img src="assets/paneli-montazh.webp" alt="Монтаж сэндвич-панелей автокраном с люльки - объект NISADA" width="800" height="880" loading="lazy" decoding="async"></figure>
+          <figure class="fm-b reveal-img"><img src="assets/paneli-fasad.webp" alt="Готовый фасад из сэндвич-панелей с наружной лестницей - объект NISADA" width="900" height="698" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </article>
@@ -290,8 +312,8 @@
           <a class="feat-link reveal" href="#kontakty" data-i18n="f4.cta">Обсудить проект</a>
         </div>
         <div class="feat-media">
-          <figure class="fm-a reveal-img"><img src="assets/ceh-space.webp" alt="Просторный производственный корпус с высокими воротами" width="1200" height="800" loading="lazy" decoding="async"></figure>
-          <figure class="fm-b reveal-img"><img src="assets/sto-garage.webp" alt="Помещение под СТО с секционными воротами" width="1200" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="fm-a reveal-img"><img src="assets/bystro-karkas.webp" alt="Металлокаркас быстровозводимого здания с кровлей из сэндвич-панелей - объект NISADA" width="800" height="880" loading="lazy" decoding="async"></figure>
+          <figure class="fm-b reveal-img"><img src="assets/bystro-gotovyy.webp" alt="Готовый производственный корпус NISADA с воротами и пристройкой" width="890" height="690" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </article>
@@ -309,8 +331,8 @@
           <a class="feat-link reveal" href="#kontakty" data-i18n="f5.cta">Обсудить здание</a>
         </div>
         <div class="feat-media">
-          <figure class="fm-a reveal-img"><img src="assets/komm-office.webp" alt="Двухэтажное коммерческое здание из кирпича с панорамным остеклением" width="1400" height="933" loading="lazy" decoding="async"></figure>
-          <figure class="fm-b reveal-img"><img src="assets/komm-brick.webp" alt="Фасад офисного здания из кирпича и камня" width="900" height="1200" loading="lazy" decoding="async"></figure>
+          <figure class="fm-a reveal-img"><img src="assets/komm-ofis.webp" alt="Четырёхэтажное офисное здание в монолите и блоках с композитным фасадом - объект NISADA" width="698" height="768" loading="lazy" decoding="async"></figure>
+          <figure class="fm-b reveal-img"><img src="assets/komm-admin.webp" alt="Готовое административное здание NISADA с благоустроенной территорией" width="900" height="698" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </article>
@@ -373,9 +395,9 @@
           <li class="reveal d4"><b>05</b><div><h3 data-i18n="st.5t">Сдача объекта</h3><p data-i18n="st.5d">Антикоррозийная и молниезащита, отделка, передача исполнительной документации.</p></div></li>
         </ol>
         <div class="stages-media">
-          <figure class="reveal-img"><img src="assets/welder.webp" alt="Сварщик за работой над металлоконструкцией" width="1200" height="800" loading="lazy" decoding="async"></figure>
-          <figure class="reveal-img"><img src="assets/truss-interior.webp" alt="Стальные фермы кровли изнутри здания" width="1200" height="857" loading="lazy" decoding="async"></figure>
-          <figure class="reveal-img tall"><img src="assets/crane-frame.webp" alt="Монтаж стального каркаса с башенными кранами" width="1000" height="1500" loading="lazy" decoding="async"></figure>
+          <figure class="reveal-img"><img src="assets/etap-karkas.webp" alt="Смонтированный металлокаркас здания зимой - объект NISADA" width="760" height="570" loading="lazy" decoding="async"></figure>
+          <figure class="reveal-img"><img src="assets/etap-naves.webp" alt="Монтаж навеса на металлокаркасе автокраном - объект NISADA" width="780" height="585" loading="lazy" decoding="async"></figure>
+          <figure class="reveal-img tall"><img src="assets/etap-montazh.webp" alt="Монтаж сэндвич-панелей на фасад производственного здания - объект NISADA" width="1200" height="630" loading="lazy" decoding="async"></figure>
         </div>
       </div>
     </div>
@@ -389,7 +411,7 @@
       <p class="lead reveal" data-i18n="lic.lead">Право вести строительно-монтажные работы подтверждено государством — лицензия действует с 2009 года.</p>
       <div class="lic-card reveal">
         <div class="lic-head">
-          <span class="lic-emblem" aria-hidden="true"><img src="assets/logo-mark.webp" alt="" width="72" height="50" loading="lazy" decoding="async"></span>
+          <span class="lic-emblem" aria-hidden="true"><img src="assets/logo-mark.webp" alt="" width="760" height="346" loading="lazy" decoding="async"></span>
           <div>
             <p class="lic-kicker" data-i18n="lic.kicker">Государственная лицензия</p>
             <p class="lic-num">ГСЛ № 03648</p>
@@ -479,7 +501,7 @@
 <footer class="ftr">
   <div class="wrap ftr-in">
     <div class="ftr-brand">
-      <img src="assets/logo-full.webp" alt="Логотип ТОО NISADA — ангары, склады, сэндвич-панели, быстровозводимые здания" width="240" height="187" loading="lazy" decoding="async">
+      <img src="assets/logo-full.webp" alt="Логотип ТОО NISADA — ангары, склады, сэндвич-панели, быстровозводимые здания" width="900" height="660" loading="lazy" decoding="async">
     </div>
     <div class="ftr-cols">
       <nav class="ftr-nav" aria-label="Навигация в подвале">
@@ -493,7 +515,7 @@
       <div class="ftr-req">
         <p data-i18n="ft.r1">ТОО «NISADA» · г. Алматы, ул. Кулимана, 1</p>
         <p data-i18n="ft.r2">Госрегистрация — 18.11.2008 · Генеральная гослицензия ГСЛ № 03648 от 01.06.2009</p>
-        <p class="ftr-note" data-i18n="ft.r3">Фотографии на сайте — иллюстрации отрасли (Unsplash).</p>
+        <p class="ftr-note" data-i18n="ft.r3">Фото объектов на сайте - из архива ТОО «NISADA».</p>
       </div>
     </div>
   </div>
@@ -523,6 +545,15 @@
   </nav>
 </div>
 
-<script src="script.js?v=20260908-1" defer></script>
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-label="Видео с объекта" data-i18n-aria="mv.dialog">
+  <button class="vmodal-close" type="button" aria-label="Закрыть видео" data-i18n-aria="mv.close">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <div class="vmodal-in">
+    <video id="vmodalVideo" controls playsinline preload="none" poster="assets/monolit-poster.webp" data-src="assets/monolit-full.mp4" width="540" height="960"></video>
+  </div>
+</div>
+
+<script src="script.js?v=20260910-1" defer></script>
 </body>
 </html>
