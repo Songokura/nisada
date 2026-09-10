@@ -10,4 +10,13 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://nisada.kz/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://nisada.kz/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://nisada.kz/privacy.html?lang=kk"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nisada.kz/privacy.html"/>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>
