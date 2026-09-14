@@ -16,21 +16,38 @@
       freq2: "Госрегистрация - 18.11.2008 · Генеральная гослицензия ГСЛ № 03648 от 01.06.2009",
       fbot: "© 2026 ТОО «NISADA». Строим надёжное будущее.",
       langaria: "Язык сайта"
-    },
-    kk: {
-      title: "Құпиялылық саясаты - «NISADA» ЖШС",
-      desc: "«NISADA» ЖШС құпиялылық саясаты: өтінім нысаны арқылы қандай дербес деректерді жинаймыз, олар не үшін керек, кімге беріледі және келісімді қалай кері қайтаруға болады.",
-      back: "Басты бетке",
-      fnav1: "Басты бет", fnav2: "Қызметтер", fnav3: "Лицензия", fnav4: "Байланыс",
-      freq1: "«NISADA» ЖШС · Алматы қ., Кулиман көшесі, 1",
-      freq2: "Мемлекеттік тіркеу - 18.11.2008 · Бас мемлекеттік лицензия ГСЛ № 03648, 01.06.2009",
-      fbot: "© 2026 «NISADA» ЖШС. Сенімді болашақ саламыз.",
-      langaria: "Сайт тілі"
     }
   };
 
   var blocks = document.querySelectorAll("[data-tr-block]");
   var buttons = document.querySelectorAll(".lang [data-lang]");
+
+  /* Казахская версия (словарь + текст политики) лежит в assets/lang/privacy-kk.js и
+     грузится только по выбору KZ или ?lang=kk: проверка Google Ads видит русскую страницу. */
+  var LANGS = ["ru", "kk"];
+  var me = document.currentScript;
+  var ver = ((me && me.src.match(/[?&]v=([^&]+)/)) || [])[1] || "";
+
+  function load(lang, done) {
+    if (TR[lang] || lang !== "kk") return done();
+    var s = document.createElement("script");
+    s.src = "assets/lang/privacy-kk.js" + (ver ? "?v=" + ver : "");
+    s.onload = function () {
+      var kk = window.NISADA_PRIVACY_KK;
+      if (kk) {
+        TR.kk = kk.tr;
+        var box = document.querySelector('[data-tr-block="kk"]');
+        if (box) box.innerHTML = kk.html;
+      }
+      done();
+    };
+    s.onerror = function () { done(); };
+    document.head.appendChild(s);
+  }
+
+  function setLang(lang) {
+    load(lang, function () { apply(lang); });
+  }
 
   function apply(lang) {
     if (!TR[lang]) lang = "ru";
@@ -69,24 +86,25 @@
     try {
       fromUrl = new URLSearchParams(location.search).get("lang");
     } catch (e) {}
-    if (fromUrl && TR[fromUrl]) return fromUrl;
+    if (LANGS.indexOf(fromUrl) !== -1) return fromUrl;
 
     var saved = null;
     try { saved = localStorage.getItem("nisada-lang"); } catch (e) {}
-    if (saved && TR[saved]) return saved;
+    if (LANGS.indexOf(saved) !== -1) return saved;
 
-    return (navigator.language || "").toLowerCase().indexOf("kk") === 0 ? "kk" : "ru";
+    /* Язык браузера не угадываем: казахский - только по явному выбору человека */
+    return "ru";
   }
 
   for (var b = 0; b < buttons.length; b++) {
     buttons[b].addEventListener("click", function () {
       var lang = this.getAttribute("data-lang");
       try { localStorage.setItem("nisada-lang", lang); } catch (e) {}
-      apply(lang);
+      setLang(lang);
     });
   }
 
-  apply(pick());
+  setLang(pick());
 })();
 
 /* Конверсия «Интерактивные номера телефонов» - на правовой странице есть свои ссылки tel:
